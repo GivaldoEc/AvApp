@@ -2,6 +2,8 @@ import 'package:avapp/repo/const/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class BluetoothError extends StatelessWidget {
+  const BluetoothError({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(

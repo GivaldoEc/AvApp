@@ -1,6 +1,7 @@
 import 'package:avapp/bloc/BTCubit/bt_cubit.dart';
 import 'package:avapp/presentation/bluetooth_screen/blueetooth_error.dart';
 import 'package:avapp/presentation/bluetooth_screen/bluetooth_list.dart';
+import 'package:avapp/presentation/bluetooth_screen/characteristic_bt.dart';
 import 'package:avapp/repo/const/themes/colors.dart';
 import 'package:avapp/repo/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +19,18 @@ class MainScreen extends StatelessWidget {
         backgroundColor: clearestGreen,
         body: BlocBuilder<BtCubit, BtState>(
           builder: (context, state) {
-            return BtOffWidget();
-
             if (state is BtInitial) {
-              return BluetoothError();
+              return const BluetoothError();
             } else if (state is BtSearching || state is BtDonwloading) {
               return const LoadingWidget();
             } else if (state is BtOFF) {
-              return BtOffWidget();
+              return const BtOffWidget();
             } else if (state is BtDisconnected) {
-              return BluetoothDeviceList();
+              return const BluetoothDeviceList();
+            } else if (state is BtConnected) {
+              return const CharacteristicPage();
             } else {
-              return BluetoothError();
+              return const BluetoothError();
             }
           },
         ),

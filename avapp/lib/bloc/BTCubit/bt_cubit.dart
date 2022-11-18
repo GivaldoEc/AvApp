@@ -12,14 +12,14 @@ StreamController<List<int>> cont = StreamController<List<int>>.broadcast();
 class BtCubit extends Cubit<BtState> {
   Stream<List<int>> listStream = cont.stream;
 
-  // AppMode Auxiliar
-  bool asyncMode = true;
+  // // AppMode Auxiliar
+  // bool asyncMode = true;
 
-  void changeMode(asyncMode) {
-    disconnectBt();
-    asyncMode = asyncMode;
-    return;
-  }
+  // void changeMode(asyncMode) {
+  //   disconnectBt();
+  //   asyncMode = asyncMode;
+  //   return;
+  // }
 
   // current info
   late BluetoothDevice? _connectedDevice;
@@ -55,18 +55,18 @@ class BtCubit extends Cubit<BtState> {
     });
   }
 
-  Future synchronize() async {
-    // await _connectedDevice!.requestMtu(512);
-    List<BluetoothService> services =
-        await _connectedDevice!.discoverServices();
-    services.forEach((service) {
-      service.characteristics.forEach((characteristic) {
-        listStream = characteristic.value.asBroadcastStream();
-        characteristic.setNotifyValue(!characteristic.isNotifying);
-      });
-    });
-    emit(BtSync());
-  }
+  // Future synchronize() async {
+  //   // await _connectedDevice!.requestMtu(512);
+  //   List<BluetoothService> services =
+  //       await _connectedDevice!.discoverServices();
+  //   services.forEach((service) {
+  //     service.characteristics.forEach((characteristic) {
+  //       listStream = characteristic.value.asBroadcastStream();
+  //       characteristic.setNotifyValue(!characteristic.isNotifying);
+  //     });
+  //   });
+  //   emit(BtSync());
+  // }
 
   // look for devices
   Future<List<BluetoothDevice>> lookForDevices() async {
@@ -121,11 +121,13 @@ class BtCubit extends Cubit<BtState> {
 
   Future sendOpenRequisition(BluetoothCharacteristic receptor) async {
     emit(BtDonwloading(device: _connectedDevice!));
-    Future.delayed(const Duration(seconds: 3), () {
-      scanCharacteristics(); // just for debug purpouse
-      return;
-    });
+    // Future.delayed(const Duration(seconds: 3), () {
+    //   scanCharacteristics(); // just for debug purpouse
+    //   return;
+    // });
     await receptor.write([1]);
+    emit(BtConnected(device: _connectedDevice!));
+
   }
 
   Future sendClosingRequisition(BluetoothCharacteristic receptor) async {
@@ -144,7 +146,8 @@ class BtCubit extends Cubit<BtState> {
     List<BluetoothDevice> connectedDevices = await flutterBlue.connectedDevices;
     if (connectedDevices.contains(device)) {
       _connectedDevice = device;
-      synchronize();
+      // synchronize();
+      scanCharacteristics();
       return;
     }
     _connectedDevice = null;

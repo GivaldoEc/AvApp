@@ -17,13 +17,13 @@ class BtDisconnected extends BtState {
 
 class BtSearching extends BtState {} // Looking for devices
 
-// class BtConnected extends BtState {
-//   final BluetoothDevice device;
+class BtConnected extends BtState {
+  final BluetoothDevice device;
 
-//   BtConnected({
-//     required this.device,
-//   }); // Bluetooth connected
-// }
+  BtConnected({
+    required this.device,
+  }); // Bluetooth connected
+}
 
 class BtDonwloading extends BtState {
   final BluetoothDevice device;
@@ -35,4 +35,4 @@ class BtDonwloading extends BtState {
 
 class BtNothingFound extends BtState {} // No device found
 
-class BtSync extends BtState {} // BtSynchronized
+// class BtSync extends BtState {} // BtSynchronized
